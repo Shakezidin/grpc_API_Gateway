@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/shakezidin/admin";
+
+service AdminService {
+    rpc AdminLogin(LoginRequest) returns (LoginResponce);
+    rpc CreateUser(User) returns (UserResponse);
+    rpc DeleteUser(DeleteUserRequest) returns (UserResponse);
+    rpc SearchUser(UserRequest) returns (SearchResponse);
+    rpc EditUser(User)  returns (UserResponse);
+}
+
+message User {
+    string id = 1;
+    string username = 2;
+    string name = 3;
+    string email = 4;
+    string password = 5;
+}
+
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+    string role = 3;
+}
+
+message LoginResponce {
+    string status = 1;
+    repeated User available = 2;
+    string token = 3;
+}
+
+message UserResponse {
+    string status = 1;
+    string username = 2;
+}
+
+message UserRequest {
+    string username = 1;
+}
+
+message DeleteUserRequest{
+    uint64 id = 1;
+}
+
+message SearchResponse {
+    string status = 1;
+    repeated User available = 2;
+}
