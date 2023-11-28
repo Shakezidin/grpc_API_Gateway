@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/shakezidin/pkg/DTO"
-	pb "github.com/shakezidin/pkg/admin/pb"
+	pb "github.com/shakezidin/pkg/admin/adminpb"
 )
 
 func AdminLoginHandler(c *gin.Context, client pb.AdminServiceClient, role string) {

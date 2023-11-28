@@ -6,6 +6,7 @@ import (
 	"github.com/shakezidin/pkg/admin"
 	cnfg "github.com/shakezidin/pkg/config"
 	"github.com/shakezidin/pkg/server"
+	"github.com/shakezidin/pkg/user"
 )
 
 func main() {
@@ -15,6 +16,7 @@ func main() {
 	}
 
 	server := server.Server()
+	user.NewUserRoute(server.R, config)
 	admin.NewAdminRoute(server.R, config)
 	server.StartServer(config.APIPORT)
 

@@ -3,7 +3,7 @@ package admin
 import (
 	"log"
 
-	pb "github.com/shakezidin/pkg/admin/pb"
+	pb "github.com/shakezidin/pkg/admin/adminpb"
 	"github.com/shakezidin/pkg/config"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package pb;
+package adminpb;
 
-option go_package = "github.com/shakezidin/admin";
+option go_package = "github.com/shakezidin/pkg/admin";
 
 service AdminService {
     rpc AdminLogin(LoginRequest) returns (LoginResponce);

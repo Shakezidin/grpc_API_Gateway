@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package pb;
 
-option go_package = "github.com/shakezidin/user";
+option go_package = "github.com/shakezidin/pkg/user";
 
 service UserService{
     rpc UserSignup(SignupRequest) returns(Result);

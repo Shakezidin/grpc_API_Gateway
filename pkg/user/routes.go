@@ -16,7 +16,7 @@ type User struct {
 	client pb.UserServiceClient
 }
 
-func NewAdminRoute(c *gin.Engine, cnfg *config.Configure) {
+func NewUserRoute(c *gin.Engine, cnfg *config.Configure) {
 	Client, err := ClientDial(*cnfg)
 	if err != nil {
 		log.Fatalf("error Not connected with gRPC server, %v", err.Error())
@@ -31,7 +31,7 @@ func NewAdminRoute(c *gin.Engine, cnfg *config.Configure) {
 	{
 		//* Logging in
 		apiUser.POST("/login", userHandler.Login)
-		apiUser.POST("/create/user", userHandler.UserAuthenticate, userHandler.SignupUser)
+		apiUser.POST("/create/user",userHandler.SignupUser)
 	}
 }
 

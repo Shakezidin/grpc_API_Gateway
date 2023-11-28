@@ -3,10 +3,10 @@ package config
 import "github.com/spf13/viper"
 
 type Configure struct {
-	APIPORT       string
-	GRPCADMINPORT string
-	GRPCUSERPORT  string
-	SECRETKEY     string
+	APIPORT       string `mapstructure:"APIPORT"`
+	GRPCADMINPORT string `mapstructure:"GRPCADMINPORT"`
+	GRPCUSERPORT  string `mapstructure:"GRPCUSERPORT"`
+	SECRETKEY     string `mapstructure:"SECRETKEY"`
 }
 
 func LoadConfigure() (*Configure, error) {
@@ -18,7 +18,7 @@ func LoadConfigure() (*Configure, error) {
 	err = viper.Unmarshal(&cnfg)
 
 	if err != nil {
-		return &Configure{}, nil
+		return nil, err
 	}
 
 	return &cnfg, nil

@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/shakezidin/middleware"
+	pb "github.com/shakezidin/pkg/admin/adminpb"
 	"github.com/shakezidin/pkg/admin/handler"
-	pb "github.com/shakezidin/pkg/admin/pb"
 	"github.com/shakezidin/pkg/config"
 )
 

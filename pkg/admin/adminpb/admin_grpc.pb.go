@@ -19,11 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AdminService_AdminLogin_FullMethodName = "/pb.AdminService/AdminLogin"
-	AdminService_CreateUser_FullMethodName = "/pb.AdminService/CreateUser"
-	AdminService_DeleteUser_FullMethodName = "/pb.AdminService/DeleteUser"
-	AdminService_SearchUser_FullMethodName = "/pb.AdminService/SearchUser"
-	AdminService_EditUser_FullMethodName   = "/pb.AdminService/EditUser"
+	AdminService_AdminLogin_FullMethodName = "/adminpb.AdminService/AdminLogin"
+	AdminService_CreateUser_FullMethodName = "/adminpb.AdminService/CreateUser"
+	AdminService_DeleteUser_FullMethodName = "/adminpb.AdminService/DeleteUser"
+	AdminService_SearchUser_FullMethodName = "/adminpb.AdminService/SearchUser"
+	AdminService_EditUser_FullMethodName   = "/adminpb.AdminService/EditUser"
 )
 
 // AdminServiceClient is the client API for AdminService service.
@@ -228,7 +228,7 @@ func _AdminService_EditUser_Handler(srv interface{}, ctx context.Context, dec fu
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AdminService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pb.AdminService",
+	ServiceName: "adminpb.AdminService",
 	HandlerType: (*AdminServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

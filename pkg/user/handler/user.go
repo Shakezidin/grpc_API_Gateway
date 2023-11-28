@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator"
@@ -13,7 +14,9 @@ import (
 )
 
 func UserLoginHandler(c *gin.Context, client pb.UserServiceClient, role string) {
-	var user DTO.User
+	newContext, cancel := context.WithTimeout(c, time.Second*2000)
+	defer cancel()
+	var user DTO.AdminLogin
 	if err := c.BindJSON(&user); err != nil {
 		log.Printf("error binding JSON")
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
@@ -31,8 +34,8 @@ func UserLoginHandler(c *gin.Context, client pb.UserServiceClient, role string) 
 			"Error":  "Validation error",
 		})
 	}
-	var ctx context.Context
-	response, err := client.UserLogin(ctx, &pb.LoginRequest{
+
+	response, err := client.UserLogin(newContext, &pb.LoginRequest{
 		Username: user.Username,
 		Password: user.Password,
 		Role:     role,
@@ -53,6 +56,8 @@ func UserLoginHandler(c *gin.Context, client pb.UserServiceClient, role string) 
 }
 
 func CreateUserHandler(c *gin.Context, client pb.UserServiceClient) {
+	newContext, cancel := context.WithTimeout(c, time.Second*2000)
+	defer cancel()
 	var user DTO.User
 	if err := c.BindJSON(&user); err != nil {
 		log.Printf("Error binding user")
@@ -72,8 +77,7 @@ func CreateUserHandler(c *gin.Context, client pb.UserServiceClient) {
 		})
 		return
 	}
-	var ctx context.Context
-	responce, err := client.UserSignup(ctx, &pb.SignupRequest{
+	responce, err := client.UserSignup(newContext, &pb.SignupRequest{
 		Username: user.Username,
 		Name:     user.Name,
 		Email:    user.Email,
