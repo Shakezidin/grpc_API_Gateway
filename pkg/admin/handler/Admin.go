@@ -32,7 +32,7 @@ func AdminLoginHandler(c *gin.Context, client pb.AdminServiceClient, role string
 			"Error":  "Validation error",
 		})
 	}
-	var ctx context.Context
+	ctx := context.Background()
 	response, err := client.AdminLogin(ctx, &pb.LoginRequest{
 		Username: admin.Username,
 		Password: admin.Password,
@@ -73,7 +73,7 @@ func CreateUserHandler(c *gin.Context, client pb.AdminServiceClient) {
 		})
 		return
 	}
-	var ctx context.Context
+	ctx := context.Background()
 	responce, err := client.CreateUser(ctx, &pb.User{
 		Username: user.Username,
 		Name:     user.Name,
@@ -110,7 +110,7 @@ func SearchUserHandler(c *gin.Context, client pb.AdminServiceClient) {
 		return
 	}
 
-	var ctx context.Context
+	ctx := context.Background()
 	result, err := client.SearchUser(ctx, &pb.UserRequest{
 		Username: name.Username,
 	})
@@ -149,7 +149,7 @@ func DeleteUserHandler(c *gin.Context, client pb.AdminServiceClient) {
 		})
 		return
 	}
-	var ctx context.Context
+	ctx := context.Background()
 	result, err := client.DeleteUser(ctx, &pb.DeleteUserRequest{
 		Id: uint64(id),
 	})
@@ -177,7 +177,7 @@ func EditUserHandler(c *gin.Context, client pb.AdminServiceClient) {
 		})
 		return
 	}
-	var ctx context.Context
+	ctx := context.Background()
 	responce, err := client.CreateUser(ctx, &pb.User{
 		Username: user.Username,
 		Name:     user.Name,

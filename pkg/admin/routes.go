@@ -31,9 +31,9 @@ func NewAdminRoute(c *gin.Engine, cnfg *config.Configure) {
 	{
 		//* Logging in
 		apiAdmin.POST("/login", adminHandler.Login)
-		apiAdmin.POST("/create/user", adminHandler.AdminAuthenticate, adminHandler.CreateUser)
+		apiAdmin.POST("/create/user", adminHandler.CreateUser)
 		apiAdmin.POST("/search/user", adminHandler.AdminAuthenticate, adminHandler.SearchUser)
-		apiAdmin.GET("/delete/user", adminHandler.AdminAuthenticate, adminHandler.DeleteUser)
+		apiAdmin.GET("/delete/user",  adminHandler.DeleteUser)
 		apiAdmin.PATCH("/edit/user", adminHandler.AdminAuthenticate, adminHandler.EditUser)
 	}
 }
