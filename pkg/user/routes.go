@@ -7,13 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/shakezidin/middleware"
 	"github.com/shakezidin/pkg/user/handler"
-	pb "github.com/shakezidin/pkg/user/pb"
+	userpb "github.com/shakezidin/pkg/user/pb"
 	"github.com/shakezidin/pkg/config"
 )
 
 type User struct {
 	cnfg   *config.Configure
-	client pb.UserServiceClient
+	client userpb.UserServiceClient
 }
 
 func NewUserRoute(c *gin.Engine, cnfg *config.Configure) {

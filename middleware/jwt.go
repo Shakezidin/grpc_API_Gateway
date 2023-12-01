@@ -11,24 +11,27 @@ import (
 	"github.com/shakezidin/pkg/config"
 )
 
+var jwtKey = []byte("SECRETKEY")
 type Claims struct {
 	Email string
 	Role  string
-	jwt.StandardClaims
+	*jwt.StandardClaims
 }
 
 func ValidateTocken(c *gin.Context, cnfg config.Configure, role string) (string, error) {
 	bearerToken := c.GetHeader("Authorization")
+	fmt.Println(bearerToken)
 	if bearerToken == "" {
 		log.Fatal("tocken missing")
 		return "", errors.New("bearer token missing")
 	}
-	claims := Claims{}
+	claims := &Claims{}
 	token := string([]byte(bearerToken)[7:])
 	parseToken, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error) {
-		return []byte(cnfg.SECRETKEY), nil
+		return []byte(jwtKey), nil
 	})
 	if err != nil {
+		fmt.Println(err)
 		log.Fatal("error while passing token")
 		return "", errors.New("error passing error")
 	}

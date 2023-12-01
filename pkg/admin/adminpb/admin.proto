@@ -13,7 +13,7 @@ service AdminService {
 }
 
 message User {
-    string id = 1;
+    uint64 id = 1;
     string username = 2;
     string name = 3;
     string email = 4;

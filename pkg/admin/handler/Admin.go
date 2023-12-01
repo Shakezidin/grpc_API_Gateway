@@ -10,10 +10,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/shakezidin/pkg/DTO"
-	pb "github.com/shakezidin/pkg/admin/adminpb"
+	adminpb "github.com/shakezidin/pkg/admin/adminpb"
 )
 
-func AdminLoginHandler(c *gin.Context, client pb.AdminServiceClient, role string) {
+func AdminLoginHandler(c *gin.Context, client adminpb.AdminServiceClient, role string) {
 	var admin DTO.AdminLogin
 	if err := c.BindJSON(&admin); err != nil {
 		log.Printf("error binding JSON")
@@ -33,7 +33,7 @@ func AdminLoginHandler(c *gin.Context, client pb.AdminServiceClient, role string
 		})
 	}
 	ctx := context.Background()
-	response, err := client.AdminLogin(ctx, &pb.LoginRequest{
+	response, err := client.AdminLogin(ctx, &adminpb.LoginRequest{
 		Username: admin.Username,
 		Password: admin.Password,
 		Role:     role,
@@ -53,7 +53,7 @@ func AdminLoginHandler(c *gin.Context, client pb.AdminServiceClient, role string
 	})
 }
 
-func CreateUserHandler(c *gin.Context, client pb.AdminServiceClient) {
+func CreateUserHandler(c *gin.Context, client adminpb.AdminServiceClient) {
 	var user DTO.User
 	if err := c.BindJSON(&user); err != nil {
 		log.Printf("Error binding user")
@@ -74,7 +74,7 @@ func CreateUserHandler(c *gin.Context, client pb.AdminServiceClient) {
 		return
 	}
 	ctx := context.Background()
-	responce, err := client.CreateUser(ctx, &pb.User{
+	responce, err := client.CreateUser(ctx, &adminpb.User{
 		Username: user.Username,
 		Name:     user.Name,
 		Email:    user.Email,
@@ -100,7 +100,7 @@ type payload struct {
 	Username string `json:"username"`
 }
 
-func SearchUserHandler(c *gin.Context, client pb.AdminServiceClient) {
+func SearchUserHandler(c *gin.Context, client adminpb.AdminServiceClient) {
 	var name payload
 	if err := c.BindJSON(&name); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -111,7 +111,7 @@ func SearchUserHandler(c *gin.Context, client pb.AdminServiceClient) {
 	}
 
 	ctx := context.Background()
-	result, err := client.SearchUser(ctx, &pb.UserRequest{
+	result, err := client.SearchUser(ctx, &adminpb.UserRequest{
 		Username: name.Username,
 	})
 	if err != nil {
@@ -131,7 +131,7 @@ func SearchUserHandler(c *gin.Context, client pb.AdminServiceClient) {
 
 }
 
-func DeleteUserHandler(c *gin.Context, client pb.AdminServiceClient) {
+func DeleteUserHandler(c *gin.Context, client adminpb.AdminServiceClient) {
 	idstr := c.Query("Id")
 	if idstr == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -150,7 +150,7 @@ func DeleteUserHandler(c *gin.Context, client pb.AdminServiceClient) {
 		return
 	}
 	ctx := context.Background()
-	result, err := client.DeleteUser(ctx, &pb.DeleteUserRequest{
+	result, err := client.DeleteUser(ctx, &adminpb.DeleteUserRequest{
 		Id: uint64(id),
 	})
 	if err != nil {
@@ -167,7 +167,9 @@ func DeleteUserHandler(c *gin.Context, client pb.AdminServiceClient) {
 	})
 }
 
-func EditUserHandler(c *gin.Context, client pb.AdminServiceClient) {
+func EditUserHandler(c *gin.Context, client adminpb.AdminServiceClient) {
+	idstr := c.Query("id")
+	id, _ := strconv.Atoi(idstr)
 	var user DTO.User
 	if err := c.BindJSON(&user); err != nil {
 		log.Printf("Error binding user")
@@ -178,7 +180,8 @@ func EditUserHandler(c *gin.Context, client pb.AdminServiceClient) {
 		return
 	}
 	ctx := context.Background()
-	responce, err := client.CreateUser(ctx, &pb.User{
+	responce, err := client.EditUser(ctx, &adminpb.User{
+		Id:       uint64(id),
 		Username: user.Username,
 		Name:     user.Name,
 		Email:    user.Email,

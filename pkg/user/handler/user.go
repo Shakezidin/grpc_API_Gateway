@@ -10,10 +10,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator"
 	"github.com/shakezidin/pkg/DTO"
-	pb "github.com/shakezidin/pkg/user/pb"
+	userpb "github.com/shakezidin/pkg/user/pb"
 )
 
-func UserLoginHandler(c *gin.Context, client pb.UserServiceClient, role string) {
+func UserLoginHandler(c *gin.Context, client userpb.UserServiceClient, role string) {
 	newContext, cancel := context.WithTimeout(c, time.Second*2000)
 	defer cancel()
 	var user DTO.AdminLogin
@@ -35,7 +35,7 @@ func UserLoginHandler(c *gin.Context, client pb.UserServiceClient, role string) 
 		})
 	}
 
-	response, err := client.UserLogin(newContext, &pb.LoginRequest{
+	response, err := client.UserLogin(newContext, &userpb.LoginRequest{
 		Username: user.Username,
 		Password: user.Password,
 		Role:     role,
@@ -55,7 +55,7 @@ func UserLoginHandler(c *gin.Context, client pb.UserServiceClient, role string) 
 	})
 }
 
-func CreateUserHandler(c *gin.Context, client pb.UserServiceClient) {
+func CreateUserHandler(c *gin.Context, client userpb.UserServiceClient) {
 	newContext, cancel := context.WithTimeout(c, time.Second*2000)
 	defer cancel()
 	var user DTO.User
@@ -77,7 +77,7 @@ func CreateUserHandler(c *gin.Context, client pb.UserServiceClient) {
 		})
 		return
 	}
-	responce, err := client.UserSignup(newContext, &pb.SignupRequest{
+	responce, err := client.UserSignup(newContext, &userpb.SignupRequest{
 		Username: user.Username,
 		Name:     user.Name,
 		Email:    user.Email,

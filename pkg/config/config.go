@@ -6,7 +6,6 @@ type Configure struct {
 	APIPORT       string `mapstructure:"APIPORT"`
 	GRPCADMINPORT string `mapstructure:"GRPCADMINPORT"`
 	GRPCUSERPORT  string `mapstructure:"GRPCUSERPORT"`
-	SECRETKEY     string `mapstructure:"SECRETKEY"`
 }
 
 func LoadConfigure() (*Configure, error) {
